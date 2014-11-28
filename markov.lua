@@ -1,3 +1,4 @@
+#!/usr/bin/env lua
 -- Markov Chain Program in Lua
 
 function allwords ()
@@ -28,7 +29,7 @@ function insert (index, value)
 end
 
 local N      = 3
-local MAXGEN = 10000
+local MAXGEN = 50000
 local NOWORD = "\n"
 
 -- build table

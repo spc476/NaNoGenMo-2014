@@ -1,4 +1,7 @@
 #!/usr/bin/env lua
+
+require "org.conman.math".randomseed()
+
 -- Markov Chain Program in Lua
 
 function allwords ()

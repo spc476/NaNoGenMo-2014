@@ -26,7 +26,7 @@ local statetab
 
 function insert (index, value)
   if not statetab[index] then
-    statetab[index] = {n=0}
+    statetab[index] = {}
   end
   table.insert(statetab[index], value)
 end

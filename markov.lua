@@ -31,7 +31,6 @@ function insert (index, value)
   table.insert(statetab[index], value)
 end
 
-local N  = 2
 local MAXGEN = 10000
 local NOWORD = "\n"
 

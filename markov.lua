@@ -18,10 +18,6 @@ function allwords ()
   end
 end
 
-function prefix (w1, w2, w3)
-  return w1 .. ' ' .. w2 .. ' ' .. w3
-end
-
 local statetab
 
 function insert (index, value)
@@ -31,25 +27,40 @@ function insert (index, value)
   table.insert(statetab[index], value)
 end
 
+local N      = 3
 local MAXGEN = 10000
 local NOWORD = "\n"
 
 -- build table
 statetab = {}
-local w1, w2, w3 = NOWORD, NOWORD, NOWORD
-for w in allwords() do
-  insert(prefix(w1, w2, w3), w)
-  w1 = w2; w2 = w3 ; w3 = w;
+
+local ww = {}
+for i = 1 , N do
+  table.insert(ww,NOWORD)
 end
-insert(prefix(w1, w2, w3), NOWORD)
+
+for w in allwords() do
+  insert(table.concat(ww,' '),w)
+  table.remove(ww,1)
+  table.insert(ww,w)
+end
+
+insert(table.concat(ww,' '),NOWORD)
+
 -- generate text
-w1 = NOWORD; w2 = NOWORD; w3 = NOWORD     -- reinitialize
+
+local ww = {}
+for i = 1 , N do
+  table.insert(ww,NOWORD)
+end
+
 for i=1,MAXGEN do
-  local list = statetab[prefix(w1, w2, w3)]
+  local list = statetab[table.concat(ww,' ')]
   -- choose a random item from list
   local r = math.random(table.getn(list))
   local nextword = list[r]
   if nextword == NOWORD then return end
   io.write(nextword, " ")
-  w1 = w2; w2 = w3; w3 = nextword
+  table.remove(ww,1)
+  table.insert(ww,nextword)
 end

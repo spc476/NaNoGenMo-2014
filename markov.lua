@@ -18,8 +18,8 @@ function allwords ()
   end
 end
 
-function prefix (w1, w2)
-  return w1 .. ' ' .. w2
+function prefix (w1, w2, w3)
+  return w1 .. ' ' .. w2 .. ' ' .. w3
 end
 
 local statetab
@@ -36,20 +36,20 @@ local NOWORD = "\n"
 
 -- build table
 statetab = {}
-local w1, w2 = NOWORD, NOWORD
+local w1, w2, w3 = NOWORD, NOWORD, NOWORD
 for w in allwords() do
-  insert(prefix(w1, w2), w)
-  w1 = w2; w2 = w;
+  insert(prefix(w1, w2, w3), w)
+  w1 = w2; w2 = w3 ; w3 = w;
 end
-insert(prefix(w1, w2), NOWORD)
+insert(prefix(w1, w2, w3), NOWORD)
 -- generate text
-w1 = NOWORD; w2 = NOWORD     -- reinitialize
+w1 = NOWORD; w2 = NOWORD; w3 = NOWORD     -- reinitialize
 for i=1,MAXGEN do
-  local list = statetab[prefix(w1, w2)]
+  local list = statetab[prefix(w1, w2, w3)]
   -- choose a random item from list
   local r = math.random(table.getn(list))
   local nextword = list[r]
   if nextword == NOWORD then return end
   io.write(nextword, " ")
-  w1 = w2; w2 = nextword
+  w1 = w2; w2 = w3; w3 = nextword
 end

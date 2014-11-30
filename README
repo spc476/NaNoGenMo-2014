@@ -1,0 +1,43 @@
+
+                        THE QUANTUM SUPPOSITION OF OZ
+
+                          "Written" by Sean Conner.
+                Based up on the works of Oz by L. Frank Baum.
+
+  This is an entry for the 2014 NaNoGenMo [1] written in about a day.  It
+takes as its input the works of L.  Frank Baum, specifically, his fourteen
+Oz novels obtained from Project Gutenberg [2].  I can't way why I chose the
+Oz novels, other than I had them handy and it makes for a decent number of
+words (764,239, but more on that number in a bit) for generating a Markov
+chain of order 3.
+
+  The corpus was edited to remove any extraneous text that isn't part of the
+main narrative of the story---not only does this removal include the Project
+Gutenberg licesening, but the table of contents, and any forwards or
+introductions included with the books, as well as page numbers and
+indications of embedded images.
+
+  The body of work was then read in and broken apart into words, and this is
+where most of the time was spent, in defining what a "word" means in this
+context.  Basically, I considered punctuation marks, end of paragraphs and
+numbers as words, in addition to those comprised normally of letters (with
+the occasional aprostophe, like "'tis" or "I'll," or with the occasional
+hyphen, such as "wood-chopper" or "shoulder-joint" or even with both, like
+"how-d'ye-do."  Other exceptions are "Mr.," "Dr." and the like, taken care
+of specifically.  
+
+  The reason I included punctuation marks and the end of paragraphs as
+"words" is to break the work up and prevent a large "wall-of-text" that so
+often happens when using a Markov chain to generate text.
+
+  The sample novel, _The Quantum Supposition_of_Oz_, is named such because
+the input consists of all the Oz novels written by L. Frank Baum and as
+such, is a quantum supposition of all of Oz (at least, Oz as told by Baum). 
+This is just one such novel and there are others to be found.  Or generated. 
+Or ignored.  It's up to you.
+
+  Enjoy.
+
+[1]	https://github.com/dariusk/NaNoGenMo-2014
+
+[2]	https://www.gutenberg.org/ebooks/search/?query=Oz

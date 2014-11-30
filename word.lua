@@ -4,24 +4,13 @@ local lpeg = require "lpeg"
 local space = lpeg.locale().space
 local alpha = lpeg.locale().alpha
 local digit = lpeg.locale().digit
-local word
-
-if false then
-  word  = space^0
-        * lpeg.C((lpeg.P(1) - space)^1)
-else
-  word = (lpeg.P(1) - alpha)^0
-       * (
-           lpeg.C(lpeg.P"Mr.") + lpeg.C((alpha + lpeg.P"'")^1)
-         )
-end
 
 local chara = alpha + lpeg.P"'"
 local dash  = lpeg.P"-" * #chara + ""
 local chard = alpha * dash
             + chara
 
-word = lpeg.C(lpeg.S[["?!.,;:()_`]]
+word = lpeg.C(lpeg.S[["?!.,;:()_`]])
      + lpeg.C"--"
      + lpeg.C(digit^1)
      + lpeg.C"Mr."

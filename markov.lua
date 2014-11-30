@@ -1,4 +1,31 @@
 #!/usr/bin/env lua
+-- ***************************************************************
+--
+-- Copyright 2014 by Sean Conner.  All Rights Reserved.
+-- 
+-- This library is free software; you can redistribute it and/or modify it
+-- under the terms of the GNU Lesser General Public License as published by
+-- the Free Software Foundation; either version 3 of the License, or (at your
+-- option) any later version.
+-- 
+-- This library is distributed in the hope that it will be useful, but
+-- WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+-- or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+-- License for more details.
+-- 
+-- You should have received a copy of the GNU Lesser General Public License
+-- along with this library; if not, see <http://www.gnu.org/licenses/>.
+--
+-- Comments, questions and criticisms can be sent to: sean@conman.org
+--
+-- ====================================================================
+--
+-- This is based upon the code found at <http://www.lua.org/pil/10.2.html>
+-- but heavily modified.  The original code hard coded a chain length of
+-- two, but this parametrizes the length with a default of 3.  You can 
+-- also specify a file, or pipe the data into the program.
+-- 
+-- ********************************************************************
 
 local randomseed = require "org.conman.math".randomseed
 local syslog     = require "org.conman.syslog"

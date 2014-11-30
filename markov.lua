@@ -77,7 +77,7 @@ function insert (index, value)
   table.insert(statetab[index], value)
 end
 
-local SEED   = randomseed(1156238784)
+local SEED   = randomseed()
 local N      = 3
 local MAXGEN = 70000
 local NOWORD = "\n"
@@ -106,6 +106,8 @@ local ww = {}
 for i = 1 , N do
   table.insert(ww,NOWORD)
 end
+
+io.write(string.format("[SEED=%d]\n\n",SEED))
 
 for i=1,MAXGEN do
   local list = statetab[table.concat(ww,' ')]

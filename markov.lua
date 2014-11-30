@@ -1,24 +1,70 @@
 #!/usr/bin/env lua
 
-require "org.conman.math".randomseed()
+local randomseed = require "org.conman.math".randomseed
+local syslog     = require "org.conman.syslog"
 
 -- Markov Chain Program in Lua
 
+local lpeg = require "lpeg"
+
+local space = lpeg.locale().space
+local alpha = lpeg.locale().alpha
+local digit = lpeg.locale().digit
+
+local chara = alpha + lpeg.P"'"
+local dash  = lpeg.P"-" * #chara + ""
+local chard = alpha * dash
+            + chara
+local word  = lpeg.C(lpeg.P"\n\n" * lpeg.P"\n"^0)
+            + lpeg.C(lpeg.S[["?!.,;:()_`]])
+            + lpeg.C"--"
+            + lpeg.C(digit^1)
+            + lpeg.C"Mr."
+            + lpeg.C"MR."
+            + lpeg.C"Mrs."
+            + lpeg.C"MRS."
+            + lpeg.C"Dr."
+            + lpeg.C"DR."
+            + lpeg.C"P. S."
+            + lpeg.P"P.S."  / "P. S."
+            + lpeg.C"T. E."
+            + lpeg.P"T.E." / "T. E."
+            + lpeg.C"Gen."
+            + lpeg.C(lpeg.P"No." * space * digit^1)
+            + lpeg.C"N. B."
+            + lpeg.P"N.B." / "N. B."
+            + lpeg.C"H."
+            + lpeg.C"M."     
+            + lpeg.C"O."
+            + lpeg.C"Z."
+            + lpeg.C(chara * chard^0)
+local words = (lpeg.P(1) - word)^0 * word
+local doc   = lpeg.Ct(words^1)
+
 function allwords ()
-  local line = io.read()    -- current line
-  local pos = 1             -- current position in the line
-  return function ()        -- iterator function
-    while line do           -- repeat while there are lines
-      local s, e = string.find(line, "%w+", pos)
-      if s then      -- found a word?
-        pos = e + 1  -- update next position
-        return string.sub(line, s, e)   -- return the word
-      else
-        line = io.read()    -- word not found; try next line
-        pos = 1             -- restart from first position
-      end
+  local f
+  
+  if arg[1] then
+    f = io.open(arg[1])
+  else
+    f = io.stdin
+  end
+  
+  local list = doc:match(f:read("*a"))
+  f:close()
+  
+  syslog('debug',"read in words: %d words",#list)
+  
+  local idx = 1
+  return function()
+    if idx > #list then
+      list = nil
+      return nil
     end
-    return nil            -- no more lines: end of traversal
+    
+    local item = list[idx]
+    idx = idx + 1
+    return item
   end
 end
 
@@ -31,9 +77,12 @@ function insert (index, value)
   table.insert(statetab[index], value)
 end
 
+local SEED   = randomseed(1156238784)
 local N      = 3
-local MAXGEN = 50000
+local MAXGEN = 70000
 local NOWORD = "\n"
+
+syslog('debug',"SEED=%d",SEED)
 
 -- build table
 statetab = {}

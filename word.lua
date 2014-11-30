@@ -10,7 +10,8 @@ local dash  = lpeg.P"-" * #chara + ""
 local chard = alpha * dash
             + chara
 
-word = lpeg.C(lpeg.S[["?!.,;:()_`]])
+word = lpeg.C(lpeg.P"\n\n" * lpeg.P"\n"^0) 
+     + lpeg.C(lpeg.S[["?!.,;:()_`]])
      + lpeg.C"--"
      + lpeg.C(digit^1)
      + lpeg.C"Mr."

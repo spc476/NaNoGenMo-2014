@@ -42,7 +42,7 @@ local chara = alpha + lpeg.P"'"
 local dash  = lpeg.P"-" * #chara + ""
 local chard = alpha * dash
             + chara
-local word  = lpeg.C(lpeg.P"\n\n" * lpeg.P"\n"^0)
+local word  = lpeg.C(lpeg.P"\n\n") * lpeg.P"\n"^0
             + lpeg.C(lpeg.S[["?!.,;:()_`]])
             + lpeg.C"--"
             + lpeg.C(digit^1)
